@@ -40,7 +40,7 @@
 
 ### 1️⃣ 密钥生成器
 
-1. **打开生成器**：访问 [MobaXterm 密钥生成器](https://moba-xterm-keygen.vercel.app/) Web 应用。
+1. **打开生成器**：访问 [MobaXterm 密钥生成器](https://mbxt.vercel.app/) Web 应用。
 2. **设置许可证**：
    - 从下拉菜单中选择所需的 MobaXterm 版本。
    - 输入用户名（仅限字母字符）。
@@ -105,6 +105,6 @@ npm run build:css
 ---
 
 <div align="center">
-  <strong>由 Zarfala 用 ❤️ 精心打造</strong><br>
-  <a href="https://github.com/zarfadev/MobaXterm-Keygen">⭐ 在 GitHub 上给我们点 Star</a>
+  <strong>由 Sundys 用 ❤️ 精心打造</strong><br>
+  <a href="https://github.com/sundys/MBXT">⭐ 在 GitHub 上给我们点 Star</a>
 </div>
