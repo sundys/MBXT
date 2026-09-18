@@ -11,43 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="./css/tailwind.css" rel="stylesheet" />
   <link href="./css/fire.css" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Outfit', 'sans-serif'],
-          },
-          colors: {
-            primary: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              200: '#c3dafe',
-              300: '#a3bffa',
-              400: '#7f9cf5',
-              500: '#667eea',
-              600: '#5a67d8',
-              700: '#4c51bf',
-              800: '#434190',
-              900: '#3c366b',
-            }
-          },
-          animation: {
-            'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-          },
-          keyframes: {
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(40px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
-          }
-        }
-      }
-    }
-  </script>
   <style>
     body {
       font-family: 'Outfit', sans-serif;
