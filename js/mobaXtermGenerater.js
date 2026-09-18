@@ -6,9 +6,9 @@ VariantBase64Table.forEach((val, i) => VariantBase64ReverseDict[val] = i);
 
 /** license type */
 const LicenseType = {
-    专业版: 1,
-    教育版: 3,
-    个人版: 4
+    Professional: 1,
+    Educational: 3,
+    Personal: 4
 }
 
 /**

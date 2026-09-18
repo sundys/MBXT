@@ -11,8 +11,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="./css/pure-min.css?=2" rel="stylesheet" />
-  <link href="./css/style.css" rel="stylesheet" />
   <link href="./css/fire.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -142,16 +140,16 @@
     /* Glass panel effect */
     .glass-panel {
       background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.6);
       box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.4) inset;
     }
 
     .dark .glass-panel {
       background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
     }
@@ -585,27 +583,22 @@
   </main>
 
   <!-- Scripts -->
-  <script src="./js/vue.min-2.6.12.js"></script>
-  <script src="./js/FileSaver.js"></script>
-  <script src="./js/jszip.js"></script>
-  <script src="./js/fire.js"></script>
-  <script src="./js/alert.js"></script>
+  <script src="./js/vue.min-2.6.12.js" defer></script>
+  <script src="./js/alert.js" defer></script>
 
   <script>
     // Preloader functionality
     window.addEventListener('load', function () {
+      const preloader = document.getElementById('preloader');
+      const mainContent = document.getElementById('main-content');
+
+      preloader.classList.add('fade-out');
+      mainContent.classList.remove('content-hidden');
+      mainContent.classList.add('content-visible');
+
       setTimeout(function () {
-        const preloader = document.getElementById('preloader');
-        const mainContent = document.getElementById('main-content');
-
-        preloader.classList.add('fade-out');
-        mainContent.classList.remove('content-hidden');
-        mainContent.classList.add('content-visible');
-
-        setTimeout(function () {
-          preloader.style.display = 'none';
-        }, 600);
-      }, 400); // slight artificial delay for premium feel
+        preloader.style.display = 'none';
+      }, 600);
     });
 
     // Theme toggle functionality
@@ -770,15 +763,35 @@
             }
           }
         },
-        generateLicenseFile(licenseStr) {
-          let zip = new JSZip();
-          zip.file("Pro.key", licenseStr);
-          zip.generateAsync({ type: "blob" }).then((content) => {
+        loadScript(src) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('Failed to load ' + src));
+            document.body.appendChild(script);
+          });
+        },
+        async loadZipLibs() {
+          // Lazily load the (de)compression helpers only when actually needed
+          if (typeof JSZip === 'undefined') {
+            await this.loadScript('./js/jszip.js');
+          }
+          if (typeof saveAs === 'undefined') {
+            await this.loadScript('./js/FileSaver.js');
+          }
+        },
+        async generateLicenseFile(licenseStr) {
+          try {
+            await this.loadZipLibs();
+            let zip = new JSZip();
+            zip.file("Pro.key", licenseStr);
+            const content = await zip.generateAsync({ type: "blob" });
             saveAs(content, "Custom.mxtpro");
-          }).catch((error) => {
+          } catch (error) {
             console.error('Error creating zip file:', error);
             showToast('创建许可证文件时出错，请重试。', 'error');
-          });
+          }
         },
         handleLicenseFileUpload(event) {
           const file = event.target.files[0];
@@ -804,20 +817,20 @@
             }
           }
         },
-        mergeFiles() {
+        async mergeFiles() {
           if (!this.licenseFile || !this.customSettingsFile) {
             showToast('请上传两个必需的文件', 'error');
             return;
           }
-          mergeZipFiles(this.licenseFile, this.customSettingsFile)
-            .then((mergedContent) => {
-              saveAs(mergedContent, "Custom.mxtpro");
-              showToast('文件合并成功！', 'success');
-            })
-            .catch((error) => {
-              console.error('Error merging files:', error);
-              showToast('合并文件时出错，请重试。', 'error');
-            });
+          try {
+            await this.loadZipLibs();
+            const mergedContent = await mergeZipFiles(this.licenseFile, this.customSettingsFile);
+            saveAs(mergedContent, "Custom.mxtpro");
+            showToast('文件合并成功！', 'success');
+          } catch (error) {
+            console.error('Error merging files:', error);
+            showToast('合并文件时出错，请重试。', 'error');
+          }
         }
       }
     });
