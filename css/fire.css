@@ -1,14 +1,5 @@
-/* VIP Aurora Stripes Background */
+/* VIP Aurora Stripes Background (static) */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
-
-@keyframes aurora {
-    from {
-        background-position: 50% 50%, 50% 50%;
-    }
-    to {
-        background-position: 350% 50%, 350% 50%;
-    }
-}
 
 .box-main {
   position: relative;
@@ -64,7 +55,6 @@
     inset: 0;
     background-image: var(--stripes), var(--rainbow);
     background-size: 200%, 100%;
-    animation: aurora 40s linear infinite;
     mix-blend-mode: difference;
 }
 

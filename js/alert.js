@@ -56,14 +56,14 @@ function renderSecureAura() {
   console.log('%c' + asciiArt, asciiAuraStyle);
 
   // Print Warning Message
-  console.log("%cSTOP! SECURE ZONE", warningHeadingStyle);
-  
+  console.log("%c停止！安全区域", warningHeadingStyle);
+
   console.log(
-    "%cThis is a browser feature intended strictly for developers.\nDo not enter or paste any code you do not fully understand.\nDoing so could grant attackers access to hijack your session, steal your licenses, or impersonate you.\n\nProtect your data and stay safe! 🔒", 
+    "%c这是专为开发者提供的浏览器功能。\n请勿输入或粘贴任何您不完全理解的代码。\n这样做可能会让攻击者劫持您的会话、窃取您的许可证或冒充您的身份。\n\n请保护您的数据，注意安全！🔒",
     warningBodyStyle
   );
 
-  console.log("%c✨ MobaXterm Keygen System - Shield Active", signatureStyle);
+  console.log("%c✨ MobaXterm 密钥生成系统 - 防护已启用", signatureStyle);
 }
 
 // Render the protective aura once
